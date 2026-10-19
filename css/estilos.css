@@ -786,6 +786,30 @@ footer {
     background: var(--btn)
 }
 
+details.box {
+    margin-top: 8px
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 700
+}
+
+.qr {
+    background: #fff;
+    padding: 14px;
+    border-radius: 12px;
+    width: fit-content;
+    margin: 14px auto;
+    color: #111
+}
+
+.qr svg {
+    display: block;
+    width: 190px;
+    height: 190px
+}
+
 @media(max-width:680px) {
 
     .hero,
