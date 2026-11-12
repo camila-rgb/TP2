@@ -1,5 +1,5 @@
 rules_version = '2';
-// BORRADOR: se ajusta cuando se conecte la app real a Firestore.
+// Reglas de la app. El perfil (users/{uid}) ya se usa; el resto de colecciones queda listo para la siguiente etapa.
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
@@ -47,6 +47,16 @@ service cloud.firestore {
         && request.resource.data.text.size() >= 10
         && request.resource.data.text.size() <= 140;
       allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+
+    // Mensajes de contacto: cualquiera con sesión puede enviar; solo se leen desde la consola.
+    match /messages/{id} {
+      allow read, update, delete: if false;
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 10
+        && request.resource.data.text.size() <= 500;
     }
 
     // Votación comunitaria: un voto por socio (id del voto = uid).
